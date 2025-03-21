@@ -1,28 +1,29 @@
-import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
+//Components Imports
+import Nav from "../src/components/Nav"
+import Footer from "../src/components/Footer"
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
+function App() {
+    return ( 
+      <div className='h-dvh bg-white'>
+        <header className='py-4 mb-4'>
+          <Nav/>
+        </header>
+        <main className='bg-white mt-4'>
+          <Routes>
+            <Route path="/" element={<App/>}/>
+          </Routes>
+        </main>
+        <footer>
+          <Footer />
+        </footer>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    
+    )
+  }
 
 export default App
