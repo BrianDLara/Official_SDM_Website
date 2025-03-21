@@ -55,7 +55,7 @@ const Nav: React.FC = () => {
                         </div>
 
                         {/* Nav Links */}
-                        <div className={`text-gray-900 flex flex-col xl:flex-row xl:space-x-8 space-y-2 xl:space-y-0 xl:justify-center ${open ? "block" : "hidden"} xl:block`}>
+                        <div className={`text-gray-900 flex flex-col xl:flex-row xl:space-x-3 space-y-2 xl:space-y-0 xl:justify-center items-center ${open ? "flex" : "hidden"} xl:block`}>
                             <button onClick={() => scrollToSection("servicios")} className="cursor-pointer font-1-semibold text-lg text-custom-red hover:text-custom-blue transition-colors duration-700 underline-effect">
                                 SERVICIOS
                             </button>
@@ -65,12 +65,10 @@ const Nav: React.FC = () => {
                             <button onClick={() => scrollToSection("conocenos")} className="cursor-pointer font-1-semibold text-lg text-custom-red hover:text-custom-blue transition-colors duration-700 underline-effect">
                                 CONÓCENOS
                             </button>
-                            
-                            {/* Redirect to GoHighLevel Form */}
                             <button 
                                 onClick={redirectToForm} 
                                 type="button" 
-                                className="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                className="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 CONSULTA GRATIS
                             </button>
                         </div>
