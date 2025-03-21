@@ -1,29 +1,48 @@
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router';
 
-//Components Imports
+// Component Imports
 import Nav from "../src/components/Nav"
 import Footer from "../src/components/Footer"
-import './App.css'
+import Home from "../src/pages/Home";
+import PoliticaPrivacidad from "../src/pages/PoliticaPrivacidad"
+import TerminosCondiciones from "../src/pages/TerminosCondiciones"
 
 
-function App() {
-    return ( 
+
+const App = () => {
+    const location = useLocation(); // Get current URL
+
+    useEffect(() => {
+        if (location.hash) {
+            const sectionId = location.hash.replace("#", "");
+            setTimeout(() => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: "smooth" });
+                }
+            }, 100); // Small delay ensures the section is available
+        }
+    }, [location]); // Runs when URL changes
+
+    return (
       <div className='h-dvh bg-white'>
         <header className='py-4 mb-4'>
           <Nav/>
         </header>
         <main className='bg-white mt-4'>
           <Routes>
-            <Route path="/" element={<App/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/politica-privacidad" element={<PoliticaPrivacidad/>}/>
+            <Route path="/terminos-condiciones" element={<TerminosCondiciones/>}/>
           </Routes>
         </main>
         <footer>
-          <Footer />
+          <Footer/>
         </footer>
       </div>
-    
-    )
-  }
+    );
+};
 
-export default App
+export default App;
