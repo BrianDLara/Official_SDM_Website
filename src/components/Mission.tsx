@@ -2,7 +2,7 @@ import React from 'react'
 
 const Mission = () => {
   return (
-    <div className='flex-auto py-12'>
+    <div className='flex-auto pt-0 pb-8 xl:pt-12 xl:pb-12'>
         <div className='overflow-hidden'>
             <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
                 <div className='xl:grid lg:grid-cols-12 lg:gap-x-32 lg:gap-y-20'>

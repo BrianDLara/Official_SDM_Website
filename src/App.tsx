@@ -28,10 +28,10 @@ const App = () => {
 
     return (
       <div className='h-dvh bg-white'>
-        <header className='py-4 mb-4'>
+        <header className='py-4 mb-0 xl:mb-4'>
           <Nav/>
         </header>
-        <main className='bg-white mt-4'>
+        <main className='bg-white mt-0 xl:mt-4'>
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad/>}/>
