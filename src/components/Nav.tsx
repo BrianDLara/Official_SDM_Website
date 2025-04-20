@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router";
+import {apiSendaForm} from '../globals'
 
 const Nav: React.FC = () => {
     const [open, setOpen] = useState(false);
@@ -27,7 +28,7 @@ const Nav: React.FC = () => {
     };
 
     const redirectToForm = () => {
-        window.location.href = "https://api.leadconnectorhq.com/widget/form/3OwmhQaqezp2bcbzkxBg";
+        window.location.href = apiSendaForm ?? '/';
     };
 
     return (
@@ -54,7 +55,7 @@ const Nav: React.FC = () => {
             </div>
 
             {/* Navbar Links */}
-            <div className="text-center pt-0 xl:pt-6 navbar-shadow">
+            <div className="text-center pt-0git xl:pt-6 navbar-shadow">
                 <div className="mt-4 flex flex-col sm:flex-row xl:justify-end xl:items-center text-center">
                     <div className="w-full xl:w-1/3 space-y-4 xl:space-y-0 xl:space-x-16 text-center justify-center">
                         <div className={`text-gray-900 flex flex-col xl:flex-row xl:space-x-3 space-y-2 xl:space-y-0 xl:justify-center items-center ${open ? "flex" : "hidden"} xl:block`}>
