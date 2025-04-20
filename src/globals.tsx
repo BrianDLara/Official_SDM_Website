@@ -1,1 +1,1 @@
-export const apiSendaForm = process.env.REACT_APP_API_SENDA_FORM
+export const apiSendaForm = import.meta.env.VITE_API_SENDA_FORM;
