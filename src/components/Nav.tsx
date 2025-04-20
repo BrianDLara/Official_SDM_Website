@@ -28,8 +28,8 @@ const Nav: React.FC = () => {
     };
 
     const redirectToForm = () => {
-        window.location.href = apiSendaForm ?? '/';
-    };
+        window.location.href = apiSendaForm!;
+      };
 
     return (
         <div className="relative items-center pb-2">
