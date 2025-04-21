@@ -1,4 +1,5 @@
 import React from 'react';
+import { apiSendaForm } from '../globals';
 
 interface PriceCardProps {
   title: string;
@@ -9,10 +10,9 @@ interface PriceCardProps {
 
 const PriceCard: React.FC<PriceCardProps> = ({ title, price, cta, features }) => {
   
-  // Redirect to GHL Form
   const redirectToForm = () => {
-    window.location.href = "https://api.leadconnectorhq.com/widget/form/3OwmhQaqezp2bcbzkxBg"; 
-  };
+          window.open(apiSendaForm, "_blank");
+      };
 
   // Check if it's the "Pro" plan
   const isProPlan = title.toLowerCase().includes("pro");

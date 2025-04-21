@@ -3,12 +3,12 @@ import { RiAdvertisementFill, RiRobot2Fill, RiAiGenerate2 } from "react-icons/ri
 import { SiPagespeedinsights, SiAmazonsimpleemailservice } from "react-icons/si";
 import { TbCalendarUser } from "react-icons/tb";
 import { FaChartLine, FaRankingStar } from "react-icons/fa6";
+import { apiSendaForm } from '../globals';
 
 const Servicios = () => {
-    // Redirect to GoHighLevel Form
     const redirectToForm = () => {
-        window.location.href = "https://api.leadconnectorhq.com/widget/form/3OwmhQaqezp2bcbzkxBg";
-    };
+            window.open(apiSendaForm, "_blank");
+        };
 
     return (
         <div className='pb-16'>

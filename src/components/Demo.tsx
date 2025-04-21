@@ -1,11 +1,11 @@
 import React from 'react';
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { apiSendaForm } from '../globals';
 
 const Demo = () => {
-    // Redirect to GoHighLevel Form
-    const redirectToForm = () => {
-        window.location.href = "https://api.leadconnectorhq.com/widget/form/3OwmhQaqezp2bcbzkxBg";
-    };
+   const redirectToForm = () => {
+           window.open(apiSendaForm, "_blank");
+       };
 
     return (
         <div className='flex-auto'>
