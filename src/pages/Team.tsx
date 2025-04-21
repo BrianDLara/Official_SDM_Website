@@ -42,7 +42,7 @@ const Team = () => {
             </div>
             <div className="text-center">
               <h3 className="text-xl font-bold text-white">Pablo Lara</h3>
-              <p className="text-[#597EBE] font-medium">CEO & Co-Fundador</p>
+              <p className="text-[#597EBE] font-bold">CEO <span className='text-[#7A9AD0] font-light'>(Director General)</span> & Co-Fundador</p>
               <p className="text-gray-400 mt-2">
                 Cirujano dentista y emprendedor, Pablo Lara descubrió que el crecimiento de su clínica no dependería de los métodos tradicionales. 
                 A través de estrategias digitales y automatización, logró llenar su agenda de clientes y decidió fundar Senda Digital Marketing 
@@ -72,7 +72,7 @@ const Team = () => {
             </div>
             <div className="text-center">
               <h3 className="text-xl font-bold text-white">Brian Lara</h3>
-              <p className="text-[#597EBE] font-medium">CTO & Co-Fundador</p>
+              <p className="text-[#597EBE] font-bold">CTO <span className='text-[#7A9AD0] font-light'>(Director de Tecnología)</span> & Co-Fundador</p>
               <p className="text-gray-400 mt-2">
                 Ingeniero en software con una pasión por la automatización, Brian ha sido clave en el desarrollo de 
                 la infraestructura digital de Senda. Gracias a su experiencia en tecnología, ha creado sistemas eficientes 
