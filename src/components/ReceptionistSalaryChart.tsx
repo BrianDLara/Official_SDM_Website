@@ -1,5 +1,6 @@
 import React from "react";
 import { apiSendaForm } from '../globals';
+import { FaWhatsapp } from "react-icons/fa";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from "recharts";
@@ -64,7 +65,7 @@ const ReceptionistSalaryChart: React.FC = () => {
                 target="_blank"
                 className="text-sm sm:text-base underline text-[#93b4ff] hover:text-white font-medium"
               >
-                O contáctanos por WhatsApp
+                <span className='flex items-center'>O contáctanos por &nbsp; <FaWhatsapp className='text-[#25D366]' /><p className='pl-1'>WhatsApp</p></span> 
               </a>
             </div>
           </div>
@@ -73,8 +74,8 @@ const ReceptionistSalaryChart: React.FC = () => {
 
       {/* GRÁFICA */}
       <div className="w-full max-w-4xl mx-auto mt-12">
-        <h3 className="text-2xl font-bold text-center mb-2 text-white">
-          Comparación mensual: Recepcionista dental vs Senda CRM
+        <h3 className="text-2xl font-bold text-center mb-2 text-white px-3">
+          Comparación mensual: Recepcionista dental vs Senda
         </h3>
         <p className="text-sm text-center text-gray-400 mb-6">
           * Proyección basada en costos mensuales con un crecimiento salarial anual del 4.5%

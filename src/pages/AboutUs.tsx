@@ -204,6 +204,11 @@ const AboutUs = () => {
         answer: "Nuestros precios varían según el tipo de servicio que necesites. Ofrecemos paquetes flexibles y opciones personalizadas para ajustarnos a cualquier tipo de negocio. Contáctanos para recibir una cotización específica basada en tus requerimientos."
       },
       { 
+        question: "¿Por qué es más barato elegir a Senda que contratar una recepcionista?",
+        answer:
+          "Con Senda CRM puedes automatizar tareas clave como agendamiento, seguimiento y atención al cliente por solo $1,899 MXN al mes. Contratar a una recepcionista a tiempo completo puede costar más de $8,000 MXN mensuales, sin contar beneficios ni capacitación. Nuestra tecnología trabaja 24/7 sin interrupciones, permitiéndote ahorrar y mejorar la eficiencia."
+      },
+      { 
         question: "¿Qué diferencia a Senda Digital Marketing de otras agencias?", 
         answer: "Nos enfocamos en la automatización y en resultados medibles. No solo creamos campañas publicitarias, sino que también automatizamos procesos para que cada cliente sea atendido eficientemente sin perder oportunidades de venta. Además, nuestros servicios están diseñados con tecnología de CRM integrada, permitiéndote tener un control total de tu negocio en un solo lugar."
       },
