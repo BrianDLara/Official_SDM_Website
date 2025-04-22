@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { apiSendaForm } from '../globals';
 
-const Demo = () => {
-   const redirectToForm = () => {
-           window.open(apiSendaForm, "_blank");
-       };
-
+const DesktopMockup = () => {
+    const redirectToForm = () => {
+        window.open(apiSendaForm, "_blank");
+    };
+    
     return (
         <div className='flex-auto'>
-            <div className='pt-24 pb-18 overflow-hidden'>
+            <div className='pt-24 overflow-hidden'>
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
                     <div className='xl:grid lg:grid-cols-12 lg:gap-x-32 lg:gap-y-20 flex flex-col-reverse lg:flex-row items-center'>
 
@@ -95,7 +95,6 @@ const Demo = () => {
                 </div>
             </div>  
         </div>
-    );
-}
+    )}
 
-export default Demo;
+export default DesktopMockup

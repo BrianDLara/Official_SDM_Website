@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 
 // Component Imports
 import Mission from "../components/Mission";
-import Demo from "../components/Demo";
+import Facts from "./Facts";
 import Servicios from "./Servicios";
 import Precios from "./Precios";
 import AboutUs from "./AboutUs"
@@ -33,7 +33,7 @@ const Home = () => {
                 <Servicios/>
             </section>
             <section className="bg-white">
-                <Demo />
+                <Facts />
             </section>
             <section id="precios" className="py-8 bg-gray-900 text-black">
                 <Precios />
