@@ -8,6 +8,8 @@ import Footer from "../src/components/Footer"
 import Home from "../src/pages/Home";
 import PoliticaPrivacidad from "../src/pages/PoliticaPrivacidad"
 import TerminosCondiciones from "../src/pages/TerminosCondiciones"
+import Webinar from "../src/pages/Webinar"
+
 
 
 
@@ -36,6 +38,7 @@ const App = () => {
             <Route path="/" element={<Home/>}/>
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad/>}/>
             <Route path="/terminos-condiciones" element={<TerminosCondiciones/>}/>
+            <Route path="/webinar" element={<Webinar/>}/>
           </Routes>
         </main>
         <footer>

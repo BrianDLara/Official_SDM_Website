@@ -1,10 +1,16 @@
-import React from 'react'
+import React from 'react';
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { apiSendaForm } from '../globals';
+import { useNavigate } from 'react-router-dom';
 
 const DesktopMockup = () => {
-    const redirectToForm = () => {
-        window.open(apiSendaForm, "_blank");
+    const navigate = useNavigate();
+
+    const redirectToWebinar = () => {
+        // Go to the webinar page and scroll to top
+        navigate('/webinar');
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
     };
 
     return (
@@ -73,23 +79,23 @@ const DesktopMockup = () => {
                         {/* Sales Copy (Right) */}
                         <div className='relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:max-w-none lg:pt-6 xl:col-span-6 text-center lg:text-left'>
                             <h1 className="text-4xl font-bold tracking-tight text-[#FBB02E]">
-                                <strong>¿Listo para llenar tu agenda de clientes?</strong>
+                                <strong>¿Listo para automatizar tu negocio?</strong>
                             </h1>
                             <h2 className="mt-4 text-2xl font-semibold text-gray-800">
-                                Consigue más clientes y automatiza tu negocio
+                                Descubre Senda CRM en nuestro próximo webinar
                             </h2>
                             <p className="mt-6 text-lg text-gray-600">
-                                Con nuestra solución, llenamos tu agenda de citas automáticamente
-                                para que te enfoques en atender clientes y hacer crecer tu negocio.
+                                Aprende cómo Senda CRM te ayuda a <strong>automatizar clientes, ventas y comunicación</strong>.
+                                Gestiona tu negocio en un solo lugar y ahorra tiempo.
                             </p>
                             <ul className="mt-6 space-y-3 text-gray-600">
                                 <li className="flex items-start text-left">
                                     <IoIosCheckmarkCircle size="1.5rem" className="text-green-700 mr-3 mt-1" />
-                                    <span className="text-lg"><strong>Publicidad dirigida</strong> para atraer clientes interesados</span>
+                                    <span className="text-lg"><strong>Automatización de WhatsApp y SMS</strong> para agendar sin esfuerzo</span>
                                 </li>
                                 <li className="flex items-start text-left">
                                     <IoIosCheckmarkCircle size="1.5rem" className="text-green-700 mr-3 mt-1" />
-                                    <span className="text-lg"><strong>Automatización de WhatsApp & SMS</strong> para agendar sin esfuerzo</span>
+                                    <span className="text-lg"><strong>Respuestas automáticas con IA</strong> para atender clientes 24/7</span>
                                 </li>
                                 <li className="flex items-start text-left">
                                     <IoIosCheckmarkCircle size="1.5rem" className="text-green-700 mr-3 mt-1" />
@@ -97,17 +103,17 @@ const DesktopMockup = () => {
                                 </li>
                                 <li className="flex items-start text-left">
                                     <IoIosCheckmarkCircle size="1.5rem" className="text-green-700 mr-3 mt-1" />
-                                    <span className="text-lg"><strong>CRM inteligente</strong> para gestionar tu negocio en un solo lugar</span>
+                                    <span className="text-lg"><strong>Gestión inteligente de clientes</strong> para crecer más rápido</span>
                                 </li>
                             </ul>
-                            <p className="mt-6 text-lg font-bold text-gray-600">Empieza hoy y llena tu calendario de citas</p>
+                            <p className="mt-6 text-lg font-bold text-gray-600">Únete a nuestro webinar y lleva tu negocio al siguiente nivel</p>
 
                             {/* Redirect Button */}
                             <button
-                                onClick={redirectToForm}
+                                onClick={redirectToWebinar}
                                 className="cursor-pointer mt-6 bg-[#FBB02E] hover:bg-[#e09a2a] text-white font-bold py-3 px-6 rounded-lg text-lg transition-all duration-300"
                             >
-                                Reserva una Demo Gratis
+                                Regístrate Gratis al Webinar
                             </button>
                         </div>
 

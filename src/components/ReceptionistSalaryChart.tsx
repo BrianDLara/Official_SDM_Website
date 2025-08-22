@@ -1,15 +1,22 @@
 import React from "react";
-import { apiSendaForm } from '../globals';
 import { FaWhatsapp } from "react-icons/fa";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend
 } from "recharts";
-import { CheckCircle, XCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ReceptionistSalaryChart: React.FC = () => {
   const baseSalary = 96000; // Sueldo anual base
   const growthRate = 0.045;
   const sendaMonthlyCost = 1899;
+  const navigate = useNavigate();
 
   const data = Array.from({ length: 10 }, (_, i) => {
     const year = 2025 + i;
@@ -23,12 +30,14 @@ const ReceptionistSalaryChart: React.FC = () => {
     };
   });
 
-  const redirectToForm = () => {
-    window.open(apiSendaForm, "_blank");
+  const redirectToWebinar = () => {
+    navigate("/webinar#top");
+    // Si prefieres llevarlos directamente a la sección de reserva, usa:
+    // navigate("/webinar#booking");
   };
 
   return (
-    <div className='pt-4 pb-16 bg-gray-900'>
+    <div className="pt-4 pb-16 bg-gray-900">
       {/* CTA SECCIÓN */}
       <div className="text-center bg-gray-800 px-4 sm:px-6 py-10 sm:py-12 rounded-2xl border border-gray-700 shadow-md mt-10">
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 sm:gap-14 max-w-3xl mx-auto">
@@ -47,7 +56,7 @@ const ReceptionistSalaryChart: React.FC = () => {
               Ahorra más que contratando una recepcionista
             </h3>
             <p className="text-base sm:text-lg text-gray-300">
-              Con Senda CRM automatizas tu atención al cliente por solo {" "}
+              Con Senda CRM automatizas tu atención al cliente por solo{" "}
               <strong className="text-white">$1,899 MXN</strong> al mes.
               Agenda, responde y da seguimiento sin contratar personal adicional.
             </p>
@@ -55,7 +64,7 @@ const ReceptionistSalaryChart: React.FC = () => {
             {/* Botones */}
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4">
               <button
-                onClick={redirectToForm}
+                onClick={redirectToWebinar}
                 className="w-full sm:w-auto bg-[#FBB02E] hover:bg-[#e09a2a] text-white font-bold py-3 px-6 rounded-lg text-base sm:text-lg transition-all duration-300"
               >
                 Solicita una Demo Gratis
@@ -65,7 +74,11 @@ const ReceptionistSalaryChart: React.FC = () => {
                 target="_blank"
                 className="text-sm sm:text-base underline text-[#93b4ff] hover:text-white font-medium"
               >
-                <span className='flex items-center'>O contáctanos por &nbsp; <FaWhatsapp className='text-[#25D366]' /><p className='pl-1'>WhatsApp</p></span> 
+                <span className="flex items-center">
+                  O contáctanos por &nbsp;
+                  <FaWhatsapp className="text-[#25D366]" />
+                  <p className="pl-1">WhatsApp</p>
+                </span>
               </a>
             </div>
           </div>
@@ -89,21 +102,24 @@ const ReceptionistSalaryChart: React.FC = () => {
               stroke="#ccc"
               tickFormatter={(value) => `$${value.toLocaleString()}`}
               label={{
-                value: 'Costo mensual (MXN)',
+                value: "Costo mensual (MXN)",
                 angle: -90,
-                position: 'insideLeft',
+                position: "insideLeft",
                 offset: -25,
-                style: { fill: '#ccc', fontSize: 16 },
+                style: { fill: "#ccc", fontSize: 16 },
                 dy: 80,
               }}
-              
             />
             <Tooltip
               formatter={(value) => `$${value.toLocaleString()}`}
-              contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
-              labelStyle={{ color: '#fff' }}
+              contentStyle={{
+                backgroundColor: "#1f2937",
+                borderColor: "#374151",
+                color: "#fff",
+              }}
+              labelStyle={{ color: "#fff" }}
             />
-            <Legend wrapperStyle={{ color: '#fff' }} />
+            <Legend wrapperStyle={{ color: "#fff" }} />
             <Line
               type="monotone"
               dataKey="recepcionista"

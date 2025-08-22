@@ -1,73 +1,96 @@
 import React from 'react';
 import PriceCard from '../components/PriceCard';
+import { useNavigate } from 'react-router-dom';
 
-const pricingPlans = [
-  {
-    title: "Plan Básico",
-    price: "99",
-    cta: "Empieza ahora con el Plan Básico",
+const Precios: React.FC = () => {
+  const navigate = useNavigate();
+  const goToWebinar = () => navigate('/webinar#top'); // or '/webinar#booking'
+
+  const planUnico = {
+    title: "Plan Único",
+    price: "175",
+    currency: "USD",
+    period: "mes",
+    cta: "Regístrate en el webinar",
+    offerNote:
+      "Asiste al webinar y obtén $100 USD de descuento/mes durante el primer año (pagarás $75/mes por 12 meses).",
+    badge: "Mejor para empezar",
     features: [
       { name: "Acceso al CRM de Senda", included: true },
-      { name: "Automatización de chatbot", included: true },
-      { name: "Instalación inicial", included: true },
-      { name: "1 video de publicidad (Meta Ads)", included: true },
-      { name: "Acceso a la App Móvil", included: true },
-      { name: "Soporte: Hasta 3 consultas al mes", included: true },
-      { name: "Gestión de reputación", included: false },
-      { name: "Chatbot con integración de IA con ChatGPT", included: false },
-      { name: "Agenda de citas automática", included: false },
-      { name: "Tutoriales básicos para Meta Ads", included: false },
-      { name: "Publicaciones en Meta Ads", included: false },
-
-    ],
-  },
-  {
-    title: "Plan Pro",
-    price: "149",
-    cta: "Escala tu negocio con el Plan Pro",
-    features: [
-      { name: "Acceso al CRM de Senda", included: true },
-      { name: "Automatización de chatbot", included: true },
-      { name: "Instalación inicial", included: true },
-      { name: "1 video de publicidad (Meta Ads)", included: true },
-      { name: "Acceso a la App Móvil", included: true },
-      { name: "Soporte: Hasta 5 consultas al mes", included: true },
-      { name: "Gestión de reputación", included: true },
-      { name: "Chatbot con integración de IA con ChatGPT", included: true },
+      { name: "Agente de IA en WhatsApp", included: true },
+      { name: "Automatizaciones (recordatorios, pipelines, tareas)", included: true },
       { name: "Agenda de citas automática", included: true },
-      { name: "Tutoriales básicos para Meta Ads", included: true },
-      { name: "Publicaciones en Meta Ads", included: false },
-    ],
-  },
-  {
-    title: "Plan Premium",
-    price: "299",
-    cta: "Domina el marketing con el Plan Elite",
-    features: [
-      { name: "Acceso al CRM de Senda", included: true },
-      { name: "Automatización de chatbot", included: true },
-      { name: "Instalación inicial", included: true },
-      { name: "1 video de publicidad (Meta Ads)", included: true },
-      { name: "Acceso a la App Móvil", included: true },
-      { name: "Soporte: Ilimitado", included: true },
       { name: "Gestión de reputación", included: true },
-      { name: "Chatbot con integración de IA con ChatGPT", included: true },
-      { name: "Agenda de citas automática", included: true },
-      { name: "Tutoriales básicos para Meta Ads", included: true },
-      { name: "Publicaciones en Meta Ads", included: true },
+      { name: "App móvil (iOS/Android)", included: true },
+      { name: "Formularios y páginas simples", included: true },
+      { name: "Soporte: hasta 3 consultas al mes", included: true },
     ],
-  },
-];
+    highlight: true,
+  };
 
-const Precios = () => {
+  const addonSetup = {
+    title: "Add-on: Setup Profesional",
+    price: "1500",
+    currency: "USD",
+    oneTime: true, // pago único
+    cta: "Quiero el Setup (ver webinar)",
+    badge: "Implementación 100% lista",
+    offerNote: "Incluye auditoría, estrategia personalizada y entrega llave en mano.",
+    features: [
+      { name: "Automatizaciones Personalizadas", included: true },
+      { name: "Estrategia 100% Personalizada", included: true },
+      { name: "Diseño de Embudo de Ventas", included: true },
+      { name: "Desarrollo Web / Landing Page", included: true },
+      { name: "Conexión con WhatsApp y CRM", included: true },
+      { name: "Capacitación inicial al equipo", included: true },
+    ],
+  };
+
   return (
-    <div>
-      <h1 className="text-3xl text-center md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">Precios</h1>
+    <div className="pb-12">
+      {/* Banner de oferta */}
+      <div className="mx-auto max-w-4xl my-6 rounded-xl border border-amber-300/40 bg-amber-50 text-amber-900 px-4 py-3 text-center">
+        <p className="text-sm md:text-base font-medium">
+          🎁 Oferta por tiempo limitado: <strong>$100 USD de descuento/mes por 12 meses</strong> si te registras y asistes al webinar.
+          <span className="hidden sm:inline"> — Precio regular: $175/mes · Primer año: <strong>$75/mes</strong>.</span>
+        </p>
+      </div>
+
+      <h1 className="text-3xl text-center md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+        Precios
+      </h1>
       <div className="h-1 w-20 bg-gradient-to-r from-blue-400 to-teal-400 mx-auto mb-6 rounded-full"></div>
-      <div className="flex flex-wrap justify-center gap-8 py-10">
-        {pricingPlans.map((plan, index) => (
-          <PriceCard key={index} title={plan.title} price={plan.price} cta={plan.cta} features={plan.features} />
-        ))}
+
+      {/* 🔹 SINGLE CONTAINER: both cards side-by-side on md+ */}
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 place-items-center">
+          {/* Plan Único */}
+          <PriceCard
+            title={planUnico.title}
+            price={planUnico.price}
+            cta={planUnico.cta}
+            features={planUnico.features}
+            currency={planUnico.currency}
+            period={planUnico.period}
+            offerNote={planUnico.offerNote}
+            badge={planUnico.badge}
+            highlight={planUnico.highlight}
+            onCtaClick={goToWebinar}
+          />
+
+          {/* Add-on (one-time) — note: no period prop */}
+          <PriceCard
+            title={addonSetup.title}
+            price={addonSetup.price}
+            cta={addonSetup.cta}
+            features={addonSetup.features}
+            currency={addonSetup.currency}
+            offerNote={addonSetup.offerNote}
+            badge={addonSetup.badge}
+            oneTime={addonSetup.oneTime}
+            onCtaClick={goToWebinar}
+          />
+        </div>
       </div>
     </div>
   );

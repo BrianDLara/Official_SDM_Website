@@ -120,7 +120,7 @@ const ComparisonTable = () => {
                 <td className="px-6 py-4">Costo mensual</td>
                 <td className="px-6 py-4 text-red-600">
                   <span className="inline-flex items-center gap-2">
-                    <XCircle size={18} /> $6,100+ en personal
+                    <XCircle size={18} /> $6,100+ MXN en personal
                   </span>
                 </td>
                 <td className="px-6 py-4 text-green-600">
