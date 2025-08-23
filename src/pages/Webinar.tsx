@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 const WIDGET_SRC =
-  "https://links.sendadigitalmarketing.com/widget/booking/IJLv9aTMezh7ma4M5Uby";
+  "https://links.sendadigitalmarketing.com/widget/booking/gbj123qZpfsTUcUxbPuG";
 const EMBED_SCRIPT_SRC =
   "https://links.sendadigitalmarketing.com/js/form_embed.js";
 
@@ -125,7 +125,7 @@ const Webinar: React.FC = () => {
         <div className="rounded-2xl border border-white/10 bg-white/5 p-2 md:p-3">
           <iframe
             src={WIDGET_SRC}
-            id="IJLv9aTMezh7ma4M5Uby_1755826635664"
+            id="gbj123qZpfsTUcUxbPuG_1755957012785"
             title="Senda – Reserva Webinar"
             scrolling="no"
             loading="lazy"
