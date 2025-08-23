@@ -30,7 +30,7 @@ const Precios: React.FC = () => {
 
   const addonSetup = {
     title: "Add-on: Setup Profesional",
-    price: "1500",
+    price: "1,500",
     currency: "USD",
     oneTime: true, // pago único
     cta: "Quiero el Setup (ver webinar)",

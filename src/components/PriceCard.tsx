@@ -61,7 +61,7 @@ const PriceCard: React.FC<PriceCardProps> = ({
           ${price}
         </span>
         <span className="text-sm opacity-80 text-gray-700 dark:text-white/80">
-          {oneTime ? " pago único" : ` /${period ?? "mes"} ${currency}`}
+          {oneTime ? "(Pago Único) USD" : ` /${period ?? "mes"} ${currency}`}
         </span>
       </div>
 
