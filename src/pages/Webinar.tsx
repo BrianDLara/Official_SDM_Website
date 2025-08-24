@@ -25,6 +25,9 @@ const Webinar: React.FC = () => {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const AVATAR_URL =
+  "https://i.imgur.com/iRPlsA7.png";
+
   return (
     <main id="top" className="bg-gray-900 text-white">
       {/* HERO */}
@@ -90,12 +93,27 @@ const Webinar: React.FC = () => {
                 Menos mensajes manuales, más tiempo atendiendo clientes.”
               </p>
               <div className="mt-4 flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-emerald-400" />
+                <img
+                  src={AVATAR_URL}
+                  alt="Dental Inn JL"
+                  loading="lazy"
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-white/10"
+                  onError={(e) => {
+                    // Fallback visual si la imagen falla
+                    const el = e.currentTarget;
+                    el.style.display = "none";
+                    const fallback = document.createElement("div");
+                    fallback.className =
+                      "h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-emerald-400";
+                    el.parentElement?.insertBefore(fallback, el);
+                  }}
+                />
                 <div>
-                  <p className="text-sm font-semibold">Negocio local</p>
-                  <p className="text-xs text-white/60">Servicios • Retail • Restaurantes</p>
+                  <p className="text-sm font-semibold">Dental Inn JL</p>
+                  <p className="text-xs text-white/60">Clínica Dental</p>
                 </div>
               </div>
+
               <div className="mt-6 grid grid-cols-3 divide-x divide-white/10 rounded-lg border border-white/10 bg-white/5 text-center">
                 <div className="px-3 py-4">
                   <p className="text-xl font-bold">5×</p>
@@ -197,20 +215,30 @@ const Webinar: React.FC = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-xl font-semibold">Presentador</h3>
-            <div className="mt-4 flex items-center gap-4">
-              <div className="h-14 w-14 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500" />
-              <div>
-                <p className="font-semibold">Pablo Lara</p>
-                <p className="text-sm text-white/70">Fundador de Senda Digital Marketing • CRM, IA y Automatizaciones</p>
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-white/80">
-              Pablo liderará la demostración de <b>Senda CRM</b>, mostrando cómo conectar WhatsApp,
-              aprovechar la IA, implementar automatizaciones y gestionar tu reputación online.
-            </p>
-          </div>
+         <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+  <h3 className="text-xl font-semibold">Presentador</h3>
+  <div className="mt-4 flex items-center gap-4">
+    <img
+      src="https://i.imgur.com/bFssI9J.png"
+      alt="Pablo Lara"
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      className="h-14 w-14 rounded-full object-cover ring-2 ring-white/10"
+    />
+    <div>
+      <p className="font-semibold">Brian Lara</p>
+      <p className="text-sm text-white/70">
+        Fundador de Senda Digital Marketing • CRM, IA y Automatizaciones
+      </p>
+    </div>
+  </div>
+  <p className="mt-4 text-sm text-white/80">
+    Brian liderará la demostración de <b>Senda CRM</b>, mostrando cómo conectar
+    WhatsApp, aprovechar la IA, implementar automatizaciones y gestionar tu
+    reputación online.
+  </p>
+</div>
         </div>
       </section>
 
@@ -219,8 +247,8 @@ const Webinar: React.FC = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-center">Lo que dicen pequeños negocios</h2>
         <div className="mt-6 grid gap-5 md:grid-cols-2">
           {[
-            { q: "“El agente de IA filtra preguntas repetidas y agenda más rápido.”", a: "Servicios técnicos" },
-            { q: "“Las reseñas subieron y ahora nos encuentran más.”", a: "Restaurante local" },
+            { q: "“El agente de IA filtra preguntas repetidas y agenda más rápido.”", a: "Visión Clara Óptica" },
+            { q: "“Las reseñas subieron y ahora nos encuentran más.”", a: "La Casona del Sabor" },
           ].map((t, i) => (
             <figure key={i} className="rounded-xl border border-white/10 bg-white/5 p-5">
               <blockquote className="text-white/90">{t.q}</blockquote>

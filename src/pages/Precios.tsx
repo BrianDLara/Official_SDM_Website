@@ -52,7 +52,7 @@ const Precios: React.FC = () => {
       <div className="mx-auto max-w-4xl my-6 rounded-xl border border-amber-300/40 bg-amber-50 text-amber-900 px-4 py-3 text-center">
         <p className="text-sm md:text-base font-medium">
           🎁 Oferta por tiempo limitado: <strong>$100 USD de descuento/mes por 12 meses</strong> si te registras y asistes al webinar.
-          <span className="hidden sm:inline"> — Precio regular: $175/mes · Primer año: <strong>$75/mes</strong>.</span>
+          <span className="hidden sm:inline"> — Precio regular: $175/mes USD · Primer año: <strong>$75/mes USD</strong>.</span>
         </p>
       </div>
 

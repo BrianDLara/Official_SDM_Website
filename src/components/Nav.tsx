@@ -56,7 +56,7 @@ const Nav: React.FC = () => {
       </div>
 
       {/* Navbar Links */}
-      <div className="text-center pt-0 xl:pt-6 navbar-shadow">
+      <div className="text-center pt-0 xl:pt-2 navbar-shadow">
         <div className="mt-4 flex flex-col sm:flex-row xl:justify-end xl:items-center text-center">
           <div className="w-full xl:w-1/3 space-y-4 xl:space-y-0 xl:space-x-16 text-center justify-center">
             <div

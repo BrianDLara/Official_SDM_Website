@@ -125,7 +125,7 @@ const ComparisonTable = () => {
                 </td>
                 <td className="px-6 py-4 text-green-600">
                   <span className="inline-flex items-center gap-2">
-                    <CheckCircle size={18} /> Desde $1,899 MXN
+                    <CheckCircle size={18} /> Desde $175 USD
                   </span>
                 </td>
               </tr>

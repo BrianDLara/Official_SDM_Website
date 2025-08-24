@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import {
   LineChart,
@@ -8,33 +8,171 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
 } from "recharts";
 import { useNavigate } from "react-router-dom";
 
+type RateCache = {
+  rate: number;
+  fetchedAt: number; // epoch ms
+};
+
+type ViewMode = "monthly" | "yearly";
+
 const ReceptionistSalaryChart: React.FC = () => {
-  const baseSalary = 96000; // Sueldo anual base
-  const growthRate = 0.045;
-  const sendaMonthlyCost = 1899;
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 10 }, (_, i) => {
-    const year = 2025 + i;
-    const recepcionistaAnual = baseSalary * Math.pow(1 + growthRate, i);
-    const recepcionistaMensual = recepcionistaAnual / 12;
-    return {
-      year: year.toString(),
-      recepcionista: Math.round(recepcionistaMensual),
-      senda: sendaMonthlyCost,
-      ahorro: Math.round(recepcionistaMensual - sendaMonthlyCost),
-    };
-  });
+  // ===== Config precio Senda (se muestra en USD; se convierte a MXN para calcular) =====
+  const SENDA_USD = 175;
 
-  const redirectToWebinar = () => {
-    navigate("/webinar#top");
-    // Si prefieres llevarlos directamente a la sección de reserva, usa:
-    // navigate("/webinar#booking");
-  };
+  // ===== Tipo de cambio USD->MXN (con caché local y fallback) =====
+  const FALLBACK_USD_MXN = 18.6;
+  const [usdMxn, setUsdMxn] = useState<number>(FALLBACK_USD_MXN);
+  const [rateUpdatedAt, setRateUpdatedAt] = useState<Date | null>(null);
+  const [loadingRate, setLoadingRate] = useState<boolean>(true);
+
+  useEffect(() => {
+    const CACHE_KEY = "usd_mxn_rate_cache_v1";
+    const MAX_AGE_MS = 12 * 60 * 60 * 1000; // 12 horas
+
+    const fromCache = (): RateCache | null => {
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const parsed: RateCache = JSON.parse(raw);
+        if (!parsed?.rate || !parsed?.fetchedAt) return null;
+        if (Date.now() - parsed.fetchedAt > MAX_AGE_MS) return null;
+        return parsed;
+      } catch {
+        return null;
+      }
+    };
+
+    const saveCache = (rate: number) => {
+      try {
+        const payload: RateCache = { rate, fetchedAt: Date.now() };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+      } catch {
+        // ignore
+      }
+    };
+
+    const useRate = (rate: number, fetchedAtMs?: number) => {
+      setUsdMxn(rate);
+      setRateUpdatedAt(fetchedAtMs ? new Date(fetchedAtMs) : new Date());
+    };
+
+    const init = async () => {
+      setLoadingRate(true);
+      const cached = fromCache();
+      if (cached) {
+        useRate(cached.rate, cached.fetchedAt);
+        setLoadingRate(false);
+      }
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 7000);
+        const res = await fetch(
+          "https://api.exchangerate.host/latest?base=USD&symbols=MXN",
+          { signal: ctrl.signal }
+        );
+        clearTimeout(t);
+        if (!res.ok) throw new Error("Bad response");
+        const data = await res.json();
+        const freshRate = Number(data?.rates?.MXN);
+        if (freshRate && isFinite(freshRate)) {
+          useRate(freshRate);
+          saveCache(freshRate);
+        } else if (!cached) {
+          useRate(FALLBACK_USD_MXN);
+        }
+      } catch {
+        if (!cached) useRate(FALLBACK_USD_MXN);
+      } finally {
+        setLoadingRate(false);
+      }
+    };
+
+    void init();
+  }, []);
+
+  // ===== Formateadores =====
+  const formatMXN0 = (value: number) =>
+    new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
+      maximumFractionDigits: 0,
+    }).format(value);
+
+  const formatMXN = (value: number) =>
+    new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
+    }).format(value);
+
+  const sendaPriceTxtUSD = `$${SENDA_USD} USD`;
+
+  // ===== Conversiones dinámicas =====
+  const sendaMonthlyCostMXN = useMemo(
+    () => Math.round(SENDA_USD * usdMxn),
+    [SENDA_USD, usdMxn]
+  );
+  const sendaYearlyCostMXN = useMemo(
+    () => Math.round(sendaMonthlyCostMXN * 12),
+    [sendaMonthlyCostMXN]
+  );
+
+  // ===== Datos base recepcionista (anual) =====
+  const baseSalaryAnnualMXN = 96000; // sueldo anual base en MXN
+  const growthRate = 0.045;
+
+  // ===== View mode (mensual/anual) =====
+  const [mode, setMode] = useState<ViewMode>("monthly");
+
+  // ===== Dataset según modo =====
+  const data = useMemo(() => {
+    return Array.from({ length: 10 }, (_, i) => {
+      const year = 2025 + i;
+      const recepcionistaAnual = baseSalaryAnnualMXN * Math.pow(1 + growthRate, i);
+      const recepcionistaMensual = recepcionistaAnual / 12;
+
+      if (mode === "monthly") {
+        const ahorroMensual = recepcionistaMensual - sendaMonthlyCostMXN;
+        return {
+          year: year.toString(),
+          recepcionista: Math.round(recepcionistaMensual),
+          senda: sendaMonthlyCostMXN,
+          ahorro: Math.round(ahorroMensual),
+        };
+      } else {
+        const ahorroAnual = recepcionistaAnual - sendaYearlyCostMXN;
+        return {
+          year: year.toString(),
+          recepcionista: Math.round(recepcionistaAnual),
+          senda: sendaYearlyCostMXN,
+          ahorro: Math.round(ahorroAnual),
+        };
+      }
+    });
+  }, [mode, baseSalaryAnnualMXN, growthRate, sendaMonthlyCostMXN, sendaYearlyCostMXN]);
+
+  const redirectToWebinar = () => navigate("/webinar#top");
+
+  // ===== Textos dependientes del modo =====
+  const axisLabel =
+    mode === "monthly" ? "Costo mensual (MXN)" : "Costo anual (MXN)";
+  const chartTitle =
+    mode === "monthly"
+      ? "Comparación mensual: Recepcionista dental vs Senda"
+      : "Comparación anual: Recepcionista dental vs Senda";
+  const receptionistLegend =
+    mode === "monthly" ? "Recepcionista Dental (MXN/mes)" : "Recepcionista Dental (MXN/año)";
+  const sendaLegend =
+    mode === "monthly"
+      ? `Senda (${sendaPriceTxtUSD} ≈ ${formatMXN0(sendaMonthlyCostMXN)}/mes)`
+      : `Senda (${sendaPriceTxtUSD} ≈ ${formatMXN0(sendaMonthlyCostMXN)} x 12 = ${formatMXN0(sendaYearlyCostMXN)}/año)`;
+  const ahorroLegend =
+    mode === "monthly" ? "Ahorro mensual" : "Ahorro anual";
 
   return (
     <div className="pt-4 pb-16 bg-gray-900">
@@ -57,7 +195,7 @@ const ReceptionistSalaryChart: React.FC = () => {
             </h3>
             <p className="text-base sm:text-lg text-gray-300">
               Con Senda CRM automatizas tu atención al cliente por solo{" "}
-              <strong className="text-white">$1,899 MXN</strong> al mes.
+              <strong className="text-white">{sendaPriceTxtUSD}</strong> al mes.
               Agenda, responde y da seguimiento sin contratar personal adicional.
             </p>
 
@@ -72,6 +210,7 @@ const ReceptionistSalaryChart: React.FC = () => {
               <a
                 href="https://wa.me/5212713159509"
                 target="_blank"
+                rel="noreferrer"
                 className="text-sm sm:text-base underline text-[#93b4ff] hover:text-white font-medium"
               >
                 <span className="flex items-center">
@@ -85,13 +224,43 @@ const ReceptionistSalaryChart: React.FC = () => {
         </div>
       </div>
 
+      {/* TOGGLE Mensual/Anual */}
+      <div className="w-full max-w-4xl mx-auto mt-10 px-4 sm:px-0 flex items-center justify-center">
+        <div className="inline-flex rounded-xl border border-gray-700 bg-gray-800 p-1">
+          <button
+            type="button"
+            onClick={() => setMode("monthly")}
+            aria-pressed={mode === "monthly"}
+            className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+              mode === "monthly"
+                ? "bg-white text-gray-900 shadow"
+                : "text-gray-200 hover:text-white hover:bg-gray-700"
+            }`}
+          >
+            Mensual
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("yearly")}
+            aria-pressed={mode === "yearly"}
+            className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+              mode === "yearly"
+                ? "bg-white text-gray-900 shadow"
+                : "text-gray-200 hover:text-white hover:bg-gray-700"
+            }`}
+          >
+            Anual
+          </button>
+        </div>
+      </div>
+
       {/* GRÁFICA */}
-      <div className="w-full max-w-4xl mx-auto mt-12">
+      <div className="w-full max-w-4xl mx-auto mt-6">
         <h3 className="text-2xl font-bold text-center mb-2 text-white px-3">
-          Comparación mensual: Recepcionista dental vs Senda
+          {chartTitle}
         </h3>
         <p className="text-sm text-center text-gray-400 mb-6">
-          * Proyección basada en costos mensuales con un crecimiento salarial anual del 4.5%
+          * Proyección basada en costos {mode === "monthly" ? "mensuales" : "anuales"} con un crecimiento salarial anual del 4.5%
         </p>
 
         <ResponsiveContainer width="100%" height={360}>
@@ -100,9 +269,9 @@ const ReceptionistSalaryChart: React.FC = () => {
             <XAxis dataKey="year" stroke="#ccc" dy={10} />
             <YAxis
               stroke="#ccc"
-              tickFormatter={(value) => `$${value.toLocaleString()}`}
+              tickFormatter={(value) => formatMXN(Number(value))}
               label={{
-                value: "Costo mensual (MXN)",
+                value: axisLabel,
                 angle: -90,
                 position: "insideLeft",
                 offset: -25,
@@ -111,7 +280,7 @@ const ReceptionistSalaryChart: React.FC = () => {
               }}
             />
             <Tooltip
-              formatter={(value) => `$${value.toLocaleString()}`}
+              formatter={(value: number) => formatMXN(Number(value))}
               contentStyle={{
                 backgroundColor: "#1f2937",
                 borderColor: "#374151",
@@ -126,7 +295,7 @@ const ReceptionistSalaryChart: React.FC = () => {
               stroke="#EF4444"
               strokeWidth={3}
               dot={{ r: 5 }}
-              name="Recepcionista Dental (mensual)"
+              name={receptionistLegend}
             />
             <Line
               type="monotone"
@@ -134,7 +303,7 @@ const ReceptionistSalaryChart: React.FC = () => {
               stroke="#FBB02E"
               strokeWidth={3}
               dot={{ r: 5 }}
-              name="Senda CRM (mensual)"
+              name={sendaLegend}
             />
             <Line
               type="monotone"
@@ -143,10 +312,26 @@ const ReceptionistSalaryChart: React.FC = () => {
               strokeWidth={3}
               dot={{ r: 5 }}
               strokeDasharray="5 5"
-              name="Ahorro mensual"
+              name={ahorroLegend}
             />
           </LineChart>
         </ResponsiveContainer>
+
+        {/* Nota de conversión */}
+        <p className="text-center text-xs text-gray-400 mt-3 px-4">
+          * Senda CRM mostrado en USD. Conversión aproximada:{" "}
+          <strong>
+            {formatMXN0(sendaMonthlyCostMXN)} / mes
+            {"  "}
+            ({formatMXN0(sendaYearlyCostMXN)} / año)
+          </strong>
+          {rateUpdatedAt ? (
+            <> — tipo de cambio {usdMxn.toFixed(4)} MXN/USD, actualizado {rateUpdatedAt.toLocaleString()}.</>
+          ) : (
+            <> — tipo de cambio {usdMxn.toFixed(4)} MXN/USD.</>
+          )}
+          {loadingRate && " Actualizando tipo de cambio…"}
+        </p>
       </div>
     </div>
   );
