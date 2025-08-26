@@ -10,11 +10,11 @@ import PoliticaPrivacidad from "../src/pages/PoliticaPrivacidad"
 import TerminosCondiciones from "../src/pages/TerminosCondiciones"
 import Webinar from "../src/pages/Webinar"
 
-
+import GTMpageView from "./GTMpageView"
 
 
 const App = () => {
-    const location = useLocation(); // Get current URL
+    const location = useLocation(); 
 
     useEffect(() => {
         if (location.hash) {
@@ -24,9 +24,9 @@ const App = () => {
                 if (section) {
                     section.scrollIntoView({ behavior: "smooth" });
                 }
-            }, 100); // Small delay ensures the section is available
+            }, 100); 
         }
-    }, [location]); // Runs when URL changes
+    }, [location]); 
 
     return (
       <div className='h-dvh bg-white'>
@@ -34,6 +34,7 @@ const App = () => {
           <Nav/>
         </header>
         <main className='bg-white mt-0 xl:mt-4'>
+          <GTMpageView />
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad/>}/>
