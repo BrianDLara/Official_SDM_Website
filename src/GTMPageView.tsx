@@ -8,6 +8,15 @@ declare global {
   }
 }
 
+const pathWithSlash =
+  location.pathname.endsWith("/") ? location.pathname : location.pathname + "/";
+
+window.dataLayer.push({
+  event: "page_view",
+  page_path: pathWithSlash + location.search + location.hash,
+  page_title: document.title || undefined,
+});
+
 const GTMPageView: React.FC = () => {
   const location = useLocation();
 
