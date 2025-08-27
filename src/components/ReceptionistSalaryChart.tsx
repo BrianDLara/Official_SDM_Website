@@ -156,7 +156,9 @@ const ReceptionistSalaryChart: React.FC = () => {
     });
   }, [mode, baseSalaryAnnualMXN, growthRate, sendaMonthlyCostMXN, sendaYearlyCostMXN]);
 
-  const redirectToWebinar = () => navigate("/webinar#top");
+  const redirectToWebinar = () => {
+    navigate({ pathname: "/webinar/", hash: "#top" });
+  }; 
 
   // ===== Textos dependientes del modo =====
   const axisLabel =

@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Precios: React.FC = () => {
   const navigate = useNavigate();
-  const goToWebinar = () => navigate('/webinar#top'); // or '/webinar#booking'
+  
+  const redirectToWebinar = () => {
+    navigate({ pathname: "/webinar/", hash: "#top" });
+  }; 
 
   const planUnico = {
     title: "Plan Único",
@@ -75,7 +78,7 @@ const Precios: React.FC = () => {
             offerNote={planUnico.offerNote}
             badge={planUnico.badge}
             highlight={planUnico.highlight}
-            onCtaClick={goToWebinar}
+            onCtaClick={redirectToWebinar}
           />
 
           {/* Add-on (one-time) — note: no period prop */}
@@ -88,7 +91,7 @@ const Precios: React.FC = () => {
             offerNote={addonSetup.offerNote}
             badge={addonSetup.badge}
             oneTime={addonSetup.oneTime}
-            onCtaClick={goToWebinar}
+            onCtaClick={redirectToWebinar}
           />
         </div>
       </div>

@@ -7,6 +7,10 @@ const Nav: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Detect if we're already on the webinar page
+  const onWebinar =
+    location.pathname === "/webinar" || location.pathname === "/webinar/";
+
   const scrollToSection = (id: string) => {
     if (location.pathname !== "/") {
       navigate("/");
@@ -26,9 +30,15 @@ const Nav: React.FC = () => {
     }
   };
 
-  // Nuevo: ir a /webinar
+  // Ir a /webinar/ (con slash final). También empuja evento a dataLayer (opcional).
   const goToWebinar = () => {
-    navigate("/webinar");
+    window.dataLayer?.push({
+      event: "cta_click",
+      cta_name: "nav_consulta_gratis",
+      dest: "/webinar/",
+      page: location.pathname,
+    });
+    navigate("/webinar/");
     setOpen(false);
   };
 
@@ -83,14 +93,16 @@ const Nav: React.FC = () => {
                 CONÓCENOS
               </button>
 
-              {/* Aquí redirige a /webinar */}
-              <button
-                onClick={goToWebinar}
-                type="button"
-                className="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                CONSULTA GRATIS
-              </button>
+              {/* CONSULTA GRATIS: oculta si ya estás en /webinar/ */}
+              {!onWebinar && (
+                <button
+                  onClick={goToWebinar}
+                  type="button"
+                  className="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                >
+                  CONSULTA GRATIS
+                </button>
+              )}
             </div>
           </div>
         </div>

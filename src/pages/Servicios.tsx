@@ -10,8 +10,8 @@ const Servicios = () => {
   const navigate = useNavigate();
 
   const redirectToWebinar = () => {
-    navigate('/webinar#top');
-  };
+    navigate({ pathname: "/webinar/", hash: "#top" });
+  }; 
 
   return (
     <div className='pb-16'>

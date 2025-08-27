@@ -9,6 +9,7 @@ import Home from "../src/pages/Home";
 import PoliticaPrivacidad from "../src/pages/PoliticaPrivacidad";
 import TerminosCondiciones from "../src/pages/TerminosCondiciones";
 import Webinar from "../src/pages/Webinar";
+import StickyWebinarButton from "./components/StickyWebinarButton";
 
 import GTMPageView from "./GTMPageView"; 
 
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
           <Route path="/webinar" element={<Webinar />} />
         </Routes>
+        <StickyWebinarButton />
       </main>
       <footer>
         <Footer />

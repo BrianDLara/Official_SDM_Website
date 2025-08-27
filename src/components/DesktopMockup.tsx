@@ -6,12 +6,8 @@ const DesktopMockup = () => {
     const navigate = useNavigate();
 
     const redirectToWebinar = () => {
-        // Go to the webinar page and scroll to top
-        navigate('/webinar');
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 100);
-    };
+    navigate({ pathname: "/webinar/", hash: "#top" });
+    }; 
 
     return (
         <div className='flex-auto'>

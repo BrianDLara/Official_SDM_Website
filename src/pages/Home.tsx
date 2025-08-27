@@ -10,19 +10,6 @@ import AboutUs from "./AboutUs"
 import Team from "./Team"
 
 const Home = () => {
-    const location = useLocation(); // Get current URL
-
-    useEffect(() => {
-        if (location.hash) {
-            const sectionId = location.hash.replace("#", "");
-            setTimeout(() => {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.scrollIntoView({ behavior: "smooth" });
-                }
-            }, 100); // Small delay ensures the section is available
-        }
-    }, [location]); // Runs when URL changes
 
     return (
         <div>
